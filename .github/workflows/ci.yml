@@ -11,7 +11,22 @@ jobs:
 
       - uses: docker/setup-buildx-action@v4
 
-    
+      - name: Verify Docker Hub credentials
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DOCKERHUB_USERNAME" ]; then
+            echo "ERROR: DOCKERHUB_USERNAME secret is not set."
+            exit 1
+          fi
+          if [ -z "$DOCKERHUB_TOKEN" ]; then
+            echo "ERROR: DOCKERHUB_TOKEN secret is not set."
+            exit 1
+          fi
+          echo "Using Docker Hub account: $DOCKERHUB_USERNAME"
+          echo "The token must be a Docker Hub Personal Access Token with Read & Write access."
+
       - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -22,4 +37,4 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kubernetes-masterclass:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/snehal-repo:latest
