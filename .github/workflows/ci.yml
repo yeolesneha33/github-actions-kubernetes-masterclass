@@ -22,4 +22,4 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/skillspulse-live:snehal
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kubernetes-masterclass:latest
