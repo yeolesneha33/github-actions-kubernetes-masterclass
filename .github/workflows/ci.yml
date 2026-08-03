@@ -10,3 +10,16 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: docker/setup-buildx-action@v4
+
+    
+      - uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/githubactions-backend:snehal
